@@ -1,0 +1,66 @@
+race_count = df['race'].value_counts()
+average_age_men = df[df['sex'] == 'Male']['age'].mean()
+percentage_bachelors = (df['education'] == 'Bachelors').mean() * 100
+advanced_education = df['education'].isin(['Bachelors', 'Masters', 'Doctorate'])
+percentage_adv_education_more_than_50k = (df[advanced_education]['salary'] == '>50K').mean() * 100
+no_advanced_education = ~advanced_education
+percentage_no_adv_education_more_than_50k = (df[no_advanced_education]['salary'] == '>50K').mean() * 100
+min_hours_per_week = df['hours-per-week'].min()
+min_hours_people = df[df['hours-per-week'] == min_hours_per_week]
+percentage_min_hours_more_than_50k = (min_hours_people['salary'] == '>50K').mean() * 100
+country_salary_percentage = df[df['salary'] == '>50K']['native-country'].value_counts(normalize=True) * 100
+highest_percentage_country = country_salary_percentage.idxmax()
+highest_percentage_value = country_salary_percentage.max()
+india_occupation = df[(df['native-country'] == 'India') & (df['salary'] == '>50K')]['occupation']
+most_popular_occupation_in_india = india_occupation.mode()[0]
+import pandas as pd
+
+def analyze_demographic_data():
+    # Load data
+    df = pd.read_csv('data.csv')
+    
+    # Number of people of each race
+    race_count = df['race'].value_counts()
+    
+    # Average age of men
+    average_age_men = df[df['sex'] == 'Male']['age'].mean()
+    
+    # Percentage of people with a Bachelor's degree
+    percentage_bachelors = (df['education'] == 'Bachelors').mean() * 100
+    
+    # Percentage of people with advanced education making more than 50K
+    advanced_education = df['education'].isin(['Bachelors', 'Masters', 'Doctorate'])
+    percentage_adv_education_more_than_50k = (df[advanced_education]['salary'] == '>50K').mean() * 100
+    
+    # Percentage of people without advanced education making more than 50K
+    no_advanced_education = ~advanced_education
+    percentage_no_adv_education_more_than_50k = (df[no_advanced_education]['salary'] == '>50K').mean() * 100
+    
+    # Minimum number of hours worked per week
+    min_hours_per_week = df['hours-per-week'].min()
+    
+    # Percentage of people working the minimum number of hours per week earning more than 50K
+    min_hours_people = df[df['hours-per-week'] == min_hours_per_week]
+    percentage_min_hours_more_than_50k = (min_hours_people['salary'] == '>50K').mean() * 100
+    
+    # Country with highest percentage of people earning >50K
+    country_salary_percentage = df[df['salary'] == '>50K']['native-country'].value_counts(normalize=True) * 100
+    highest_percentage_country = country_salary_percentage.idxmax()
+    highest_percentage_value = country_salary_percentage.max()
+    
+    # Most popular occupation for those earning >50K in India
+    india_occupation = df[(df['native-country'] == 'India') & (df['salary'] == '>50K')]['occupation']
+    most_popular_occupation_in_india = india_occupation.mode()[0]
+    
+    return {
+        'race_count': race_count,
+        'average_age_men': average_age_men,
+        'percentage_bachelors': percentage_bachelors,
+        'percentage_adv_education_more_than_50k': percentage_adv_education_more_than_50k,
+        'percentage_no_adv_education_more_than_50k': percentage_no_adv_education_more_than_50k,
+        'min_hours_per_week': min_hours_per_week,
+        'percentage_min_hours_more_than_50k': percentage_min_hours_more_than_50k,
+        'highest_percentage_country': highest_percentage_country,
+        'highest_percentage_value': highest_percentage_value,
+        'most_popular_occupation_in_india': most_popular_occupation_in_india
+    }
