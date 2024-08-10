@@ -1,0 +1,45 @@
+import numpy as np
+
+def calculate(lst):
+    # Check if the list contains exactly 9 elements
+    if len(lst) != 9:
+        raise ValueError("List must contain nine numbers.")
+    
+    # Convert the list into a 3x3 numpy array
+    matrix = np.array(lst).reshape(3, 3)
+    
+    # Calculate the statistics
+    stats = {
+        'mean': [
+            matrix.mean(axis=0).tolist(),  # Mean for each column
+            matrix.mean(axis=1).tolist(),  # Mean for each row
+            matrix.mean().tolist()         # Mean of all elements
+        ],
+        'variance': [
+            matrix.var(axis=0).tolist(),   # Variance for each column
+            matrix.var(axis=1).tolist(),   # Variance for each row
+            matrix.var().tolist()          # Variance of all elements
+        ],
+        'standard deviation': [
+            matrix.std(axis=0).tolist(),   # Standard deviation for each column
+            matrix.std(axis=1).tolist(),   # Standard deviation for each row
+            matrix.std().tolist()          # Standard deviation of all elements
+        ],
+        'max': [
+            matrix.max(axis=0).tolist(),   # Max for each column
+            matrix.max(axis=1).tolist(),   # Max for each row
+            matrix.max().tolist()          # Max of all elements
+        ],
+        'min': [
+            matrix.min(axis=0).tolist(),   # Min for each column
+            matrix.min(axis=1).tolist(),   # Min for each row
+            matrix.min().tolist()          # Min of all elements
+        ],
+        'sum': [
+            matrix.sum(axis=0).tolist(),   # Sum for each column
+            matrix.sum(axis=1).tolist(),   # Sum for each row
+            matrix.sum().tolist()          # Sum of all elements
+        ]
+    }
+    
+    return stats
